@@ -21,4 +21,11 @@ const io = SocketIo.listen(server);
 // websockets
 io.on('connection', (socket) => {
   console.log('new connection', socket.id);
+  socket.on('chat:message', (data) => {
+    io.sockets.emit('chat:message', data);
+  });
+
+  socket.on('chat:typing', (data) => {
+    socket.broadcast.emit('chat:typing', data);
+  });
 });
